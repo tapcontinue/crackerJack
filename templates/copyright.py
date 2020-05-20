@@ -1,3 +1,5 @@
+import isbn_hyphenate
+
 copyright_1 = """
 <head>
 	<title>CoverImage</title>
