@@ -1,51 +1,40 @@
-copyright = """
-	<section>
-		<div class="music3">
-			<img src="image/copyright.jpg" alt="copyright.jpg" />
-		</div>
+copyright_1 = """
+<head>
+	<title>CoverImage</title>
+	<link href="../temp.css" type="text/css" rel="stylesheet" />
+</head>
 
-		<div class="group2">
-			<p class="isbn">Print ISBN:&#160;978-1-5400-6114-0</p>
-			<p class="isbn">ePub ISBN:&#160;978-1-5400-8063-9</p>
-			<p class="isbn">Kindle ISBN:&#160;978-1-5400-8064-6</p>
-		</div>
-		<div class="group3">
-			<img class="hallogo" src="image/hallogo.png" alt="hallogo.png" />
-		</div>
-		<div class="group4">
-			<p class="copyright">For all works contained herein:</p>
-			<p class="copyright">Unauthorized copying, arranging, adapting, recording, Internet posting, public
-				performance,</p>
-			<p class="copyright">or other distribution of music in this publication is an infringement of copyright.</p>
-			<p class="copyright">Infringers are liable under the law.</p>
-		</div>
-		<div class="group4">
-			<p class="copyright">Visit Hal Leonard Online at</p>
-			<p class="website"><a href="http://www.halleonard.com">www.halleonard.com</a></p>
-		</div>
-	</section>
+<body>
+	<p class="figure cover"><img src="./images/fcover.jpg" alt="fcover.jpg" /></p>
+	<p class="figure img"><img src="./images/copyright.jpg" alt="copyright.jpg" /></p>
+"""
+	# <p class="copyright Print">Print ISBN: 978-1-5400-4197-5</p>
+	# <p class="copyright ePub">ePub ISBN: 978-1-5400-8841-3</p>
+	# <p class="copyright Kindle">Kindle ISBN: 978-1-5400-8842-0</p>
 
-	<section class="address-container">
-		<div class="location">
-			<p class="address">Contact us:</p>
-			<p class="address"><span class="bold">Hal Leonard</span></p>
-			<p class="address">7777 W. Bluemound Rd.</p>
-			<p class="address">Milwaukee, WI 53213</p>
-			<p class="address"><a href="mailto:info@halleonard.com">Email: info@halleonard.com</a></p>
-		</div>
-		<div class="location">
-			<p class="address">In Europe, contact:</p>
-			<p class="address"><span class="bold">Hal Leonard Europe Limited</span></p>
-			<p class="address">42 Wigmore Street</p>
-			<p class="address">Marylebone, London, W1U 2RN</p>
-			<p class="address"><a href="mailto:info@halleonardeurope.com">Email: info@halleonardeurope.com</a></p>
-		</div>
-		<div class="location">
-			<p class="address">In Australia, contact:</p>
-			<p class="address"><span class="bold">Hal Leonard Australia Pty. Ltd.</span></p>
-			<p class="address">4 Lentara Court</p>
-			<p class="address">Cheltenham, Victoria, 3192 Australia</p>
-			<p class="address"><a href="mailto:ausadmin@halleonard.com.au">Email: ausadmin@halleonard.com.au</a></p>
-		</div>
-	</section>
+
+copyright_2 = """
+	<p class="figure img"><img class="hallogo" src="./image/hallogo.png" alt="hallogo.png" /></p>
+	<p class="copyright">For all works contained herein:</p>
+	<p class="copyright">Unauthorized copying, arranging, adapting, recording, Internet posting, public performance,</p>
+	<p class="copyright">or other distribution of music in this publication is an infringement of copyright.</p>
+	<p class="copyright">Infringers are liable under the law.</p>
+	<p class="copyright">Visit Hal Leonard Online at</p>
+	<p class="website"><a href="http://www.halleonard.com" target="_blank">www.halleonard.com</a></p>
+
+	<p class="copyright">Contact us:</p>
+	<p class="copyright"><span class="bold">Hal Leonard</span></p>
+	<p class="copyright">7777 W. Bluemound Rd.</p>
+	<p class="copyright">Milwaukee, WI 53213</p>
+	<p class="copyright"><a href="mailto:info@halleonard.com" target="_blank">Email: info@halleonard.com</a></p>
+	<p class="copyright">In Europe, contact:</p>
+	<p class="copyright"><span class="bold">Hal Leonard Europe Limited</span></p>
+	<p class="copyright">42 Wigmore Street</p>
+	<p class="copyright">Marylebone, London, W1U 2RN</p>
+	<p class="copyright"><a href="mailto:info@halleonardeurope.com" target="_blank">Email: info@halleonardeurope.com</a></p>
+	<p class="copyright">In Australia, contact:</p>
+	<p class="copyright"><span class="bold">Hal Leonard Australia Pty. Ltd.</span></p>
+	<p class="copyright">4 Lentara Court</p>
+	<p class="copyright">Cheltenham, Victoria, 3192 Australia</p>
+	<p class="copyright"><a href="mailto:ausadmin@halleonard.com.au" target="_blank">Email: ausadmin@halleonard.com.au</a></p>
 """

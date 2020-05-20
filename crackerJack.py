@@ -3,6 +3,7 @@ import os
 import shutil
 import glob
 import re
+import isbn_hyphenate
 
 # * Get item/title from user
 item_Number = input("What's the print item number: ")
@@ -14,10 +15,6 @@ final_folder_title = f"{item_Number_Padded}_{clean_title}"
 
 ePub_isbn = input("ePub ISBN?: ")
 os.mkdir(f"{final_folder_title}")
-
-# TODO: Ask for HLDB. Script will hyphenate and inject into copyright template.
-# hldb_isbn = input("HLDB number: i.e. 9781705100219 ")
-
 
 #* Crack open the ePub - mv content
 with zipfile.ZipFile(f"input/{ePub_isbn}.epub", 'r') as zip_ref:
@@ -46,8 +43,6 @@ cracked_ePub = open(f"{final_folder_title}/index.html", 'r').read()
 
 #* Replace old HL tags with G3 tags
 text_to_search = cracked_ePub
-
-
 
 replacement = [
     ("<\?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"\?>", " "),
@@ -125,8 +120,6 @@ replacement = [
     ("/image/music/", "/image/"),
     ("<img src=\"./image/fcover.jpg\" alt=\"fcover.jpg\"/>",
      "<p class=\"figure cover\"><img src=\"./image/fcover.jpg\" alt=\"fcover.jpg\" /></p>"),
-    ("<img src=\"./image/bcover.jpg\" alt=\"bcover.jpg\"/>",
-     "<p class=\"figure backcover\"><img src=\"./image/bcover.jpg\" alt=\"bcover.jpg\" /></p>"),
     ("<div class=\"backcover\">", " "),
     ("id=\"toc_marker-\d\d\">", " "),
     ("<p class=\"chapter-heading\" >  ", "<p class=\"chapter-heading\">"),
@@ -140,18 +133,33 @@ replacement = [
     ("<p class=\"chapter-heading\" > id\"=toc_marker-\d\d\">","<p class=\"chapter-heading\">"),
     ("</body> </html>", " "),
     ("<body id=\"body\d\d\" xml:lang=\"en-US\">", " "),
+    ("music.png\" />","music.png\"/></p>"),
+    ("<div class=\"backcover\">"," "),
+   	("<img src=\"./image/bcover.jpg\" alt=\"bcover.jpg\" />", "<p class=\"figure backcover\"><img src=\"./image/bcover.jpg\" alt=\"bcover.jpg\" /></p>"),
+    ("<p class=\"chapter-heading\">", "\n<p class=\"chapter-heading\">")
 ]
 
 for pat, repl in replacement:
     text_to_search = re.sub(pat, repl, text_to_search)
 
-# ** SAVE-----------------------
+#* SAVE
 saveFile = open('workshop/index.html', 'w')
 saveFile.write(text_to_search)
 saveFile.close()
 
-# TODO - Remove duplicate header files
-# TODO - Inject cover from template.
-# TODO - Inject copyright from template
+#* Get HLDB from user to inject into a generic copyright page
+get_hldb_isbn = input("HLDB number: i.e. 9781705100219 ")
+HLDB_ISBN = isbn_hyphenate.hyphenate(get_hldb_isbn)
+print(HLDB_ISBN)
+# TODO: Ask for HLDB. Script will hyphenate and inject into copyright template.
+
+# <head>
+# 	<title>CoverImage</title>
+# 	<link href="../temp.css" type="text/css" rel="stylesheet" />
+# </head>
+# <body>
+# 	<p class="figure cover"><img src="./image/fcover.jpg" alt="fcover.jpg" /></p>
+# 	<p class="figure img"><img src="./image/copyright.jpg" alt="copyright.jpg" /></p>
+
 # TODO - move cover to top of the file
 # TODO - move copyright to top of the file
