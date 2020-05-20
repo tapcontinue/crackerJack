@@ -19,11 +19,12 @@ os.mkdir(f"{final_folder_title}")
 # hldb_isbn = input("HLDB number: i.e. 9781705100219 ")
 
 
-# **Crack open the ePub - mv content
+#* Crack open the ePub - mv content
 with zipfile.ZipFile(f"input/{ePub_isbn}.epub", 'r') as zip_ref:
+# with zipfile.ZipFile(glob.glob(f"input/*.epub", 'r')) as zip_ref:
     zip_ref.extractall("./extracted_ePub_contents")
 
-# * Extract images from ePub
+#* Extract images from ePub
 image_extraction_source = "./extracted_ePub_contents/EPUB/image"
 image_extraction_dest = (f"./{final_folder_title}")
 dest = shutil.move(image_extraction_source, image_extraction_dest)
@@ -31,7 +32,7 @@ dest = shutil.move(image_extraction_source, image_extraction_dest)
 os.remove("./extracted_ePub_contents/EPUB/toc.xhtml")
 os.remove("./extracted_ePub_contents/EPUB/tocinternal.xhtml")
 
-# ** Merge/move all the XHTML into a single HTML - NOT SORTED!
+#* Merge/move all the XHTML into a single HTML - NOT SORTED!
 body_files = sorted(glob.glob("./extracted_ePub_contents/EPUB/body*.xhtml"))
 merged_body_files_path = f"{final_folder_title}/index.html"
 
@@ -43,24 +44,24 @@ shutil.rmtree('extracted_ePub_contents')
 
 cracked_ePub = open(f"{final_folder_title}/index.html", 'r').read()
 
-# !EXPERIMENTAL 01 - only removes single instance
-# with fileinput.FileInput(merged_body_files_path, inplace=True, backup='.bak') as file:
-#     for line in file:
-#         print(line.replace("<section>", " "), end=''),
-
-# !EXPERIMENTAL 02 - Re-jigger the previous script
+#* Replace old HL tags with G3 tags
 text_to_search = cracked_ePub
 
+
+
 replacement = [
-    ("^", " "),
-    ("<\?xml[\s\S]*?=|en-US\">", " "),
-    ("<\?xml version=\"1.0\" encoding=\"utf-8\"\?>", " "),
+    ("<\?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"\?>", " "),
     ("<!DOCTYPE html>", " "),
-    (
-    "<html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:epub=\"http://www.idpf.org/2007/ops\" xml:lang=\"en\" lang=\"en\">",
-    ""),
-    ("<style type=\"text/css\"> img { max-width: 100%; }</style>",
-     "<link href=\"../temp.css\" type=\"text/css\" rel=\"stylesheet\" />"),
+    ("<html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:epub=\"http://www.idpf.org/2007/ops\"", " "),
+	("xmlns:ibooks=\"http://vocabulary.itunes.apple.com/rdf/ibooks/vocabulary-extensions-1.0\"", " "),
+	("epub:prefix=\"ibooks: http://vocabulary.itunes.apple.com/rdf/ibooks/vocabulary-extensions-1.0\" xml:lang=\"en\"", " "),
+	("lang=\"en\">", " "),
+    ("<head>", " "),
+   	("<link href=\"css/main.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen, projection\" />", " "),
+	("<!-- Extra Meta Tag - Viewport Element -->", " "),
+	("<meta name=\"viewport\" content=\"width=device-width,minimum-scale=1.0,maximum-scale=1.0\" />", " "),
+    ("</head>", " "),
+    ("<title>body\d\d</title>"," "),
     ("\'>", "\">"),
     ("class=\'", "class=\""),
     ("=\'", "\"="),
@@ -118,7 +119,7 @@ replacement = [
     ("<div class=\"music{079,099}\">", "<p class=\"figure-tall img-holder\">"),
     ("<div class=\"music{79,99}\">", "<p class=\"figure-tall img-holder\">"),
     ("<div class=\"music\">", "<p class=\"figure-tall img-holder\">"),
-    ("   ", " "),
+    ("   ", " "),
     ("<img src=\"./image/copyright.jpg\" alt=\"copyright.jpg\"/>",
      "<p class=\"figure\"><img src=\"./image/copyright.jpg\" alt=\"copyright.jpg\" /></p>"),
     ("/image/music/", "/image/"),
@@ -135,7 +136,10 @@ replacement = [
     ("	        <p class=\"figure-tall img-holder\"",
      "	    <p class=\"figure-tall img-holder\""),
     ("</p> ", "</p>"),
-    ("<div class=\"break\">", " ")
+    ("<div class=\"break\">", " "),
+    ("<p class=\"chapter-heading\" > id\"=toc_marker-\d\d\">","<p class=\"chapter-heading\">"),
+    ("</body> </html>", " "),
+    ("<body id=\"body\d\d\" xml:lang=\"en-US\">", " "),
 ]
 
 for pat, repl in replacement:
