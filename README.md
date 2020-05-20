@@ -1,4 +1,4 @@
-# ePubCracker
+# crackerJack
 
 ePubCracker is a series of modifications to a ePub to match the G3 spec.
 
