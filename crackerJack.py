@@ -137,7 +137,9 @@ replacement = [
     ("music.png\" />","music.png\"/></p>"),
     ("<div class=\"backcover\">"," "),
    	("<img src=\"./image/bcover.jpg\" alt=\"bcover.jpg\" />", "<p class=\"figure backcover\"><img src=\"./image/bcover.jpg\" alt=\"bcover.jpg\" /></p>"),
-    ("<p class=\"chapter-heading\">", "\n<p class=\"chapter-heading\">")
+    ("<p class=\"chapter-heading\">", "\n<p class=\"chapter-heading\">"),
+    ("</body>", " "),
+    ("</html>", " ")
 ]
 
 for pat, repl in replacement:
@@ -153,7 +155,7 @@ get_hldb_isbn = input("HLDB number: i.e. 9781705100219 ")
 HLDB_ISBN = isbn_hyphenate.hyphenate(get_hldb_isbn)
 
 #* Merge templates to index
-templates = ['templates/body01.xhtml', 'templates/body02.xhtml', 'workshop/index.html']
+templates = ['templates/body01.xhtml', 'templates/body02.xhtml', 'workshop/index.html', 'templates/body03.xhtml']
 
 with open('./workshop/output.xhtml', 'w') as outfile:
     for template in templates:
@@ -174,4 +176,4 @@ with fileinput.FileInput(final_resting_spot, inplace=True,) as file:
     for line in file:
         print(line.replace("{HLDB_ISBN}", HLDB_ISBN), end='')
 
-#TODO programatically sort subheading2(coopyrights) into the bottom.
+# TOD programmatically sort subheading2(copyrights)
