@@ -4,8 +4,9 @@ import shutil
 import glob
 import re
 import isbn_hyphenate
+import fileinput
 
-# * Get item/title from user
+#* Get item/title from user
 item_Number = input("What's the print item number: ")
 item_Number_Padded = item_Number.zfill(8)
 
@@ -147,13 +148,9 @@ saveFile = open('workshop/index.html', 'w')
 saveFile.write(text_to_search)
 saveFile.close()
 
-# TODO - Sort all the music in the order that G3 requested
-# saveFile = open('workshop/index.html', 'w')
-
-
 #* Get HLDB from user to inject into a generic copyright page
-get_hldb_isbn = input("HLDB number: i.e. 9781705100219 ")
-HLDB_ISBN = isbn_hyphenate.hyphenate(get_hldb_isbn)
+# get_hldb_isbn = input("HLDB number: i.e. 9781705100219 ")
+# HLDB_ISBN = isbn_hyphenate.hyphenate(get_hldb_isbn)
 
 #* Merge templates to index
 templates = ['templates/body01.xhtml', 'templates/body02.xhtml', 'workshop/index.html']
@@ -163,3 +160,8 @@ with open('./workshop/output.xhtml', 'w') as outfile:
         with open(template) as infile:
             outfile.write(infile.read())
             outfile.write("\n")
+
+os.remove("./workshop/index.html")
+os.remove(final_folder_title+"/index.html")
+os.rename("./workshop/output.xhtml", "./workshop/index.html")
+shutil.move("./workshop/index.html", final_folder_title+"/index.html")
