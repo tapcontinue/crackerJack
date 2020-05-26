@@ -1,0 +1,2 @@
+FIND: (<p class="subheading2">.*$[\r\n]<p class="subheading2">{1,99}.*$)\n(<p class="figure-tall img-holder">.*$){1,99}
+REPLACE: $2\n$1

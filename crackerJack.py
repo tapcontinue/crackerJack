@@ -38,8 +38,7 @@ with open(copyright_file, 'r') as search_list, \
 
     for line in source_file:
         if "photorights" in line:
-            photo_rights = (line[26:-5])
-            # print(photo_rights)
+            photo_rights = (line[26:-5]) # Assuming the tag hasen't changed.
 
 #* Merge/move all the XHTML into a single HTML - NOT SORTED!
 body_files = sorted(glob.glob("./extracted_ePub_contents/EPUB/body*.xhtml"))
@@ -155,6 +154,12 @@ replacement = [
 
 for pat, repl in replacement:
     text_to_search = re.sub(pat, repl, text_to_search)
+
+#!EXPERIMENTAL- Mv contents in "Music" subfolder upa level with other images
+# src_musics = (f"{final_folder_title}/image/music")
+# src_new_music_location = (f'{final_folder_title}/image')
+# shutil.copy(src_musics, src_new_music_location)
+
 
 #* SAVE
 saveFile = open('workshop/index.html', 'w')
