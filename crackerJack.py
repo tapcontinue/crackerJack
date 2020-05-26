@@ -148,69 +148,18 @@ saveFile.write(text_to_search)
 saveFile.close()
 
 # TODO - Sort all the music in the order that G3 requested
-saveFile = open('workshop/index.html', 'w')
-
-
-# #* Get HLDB from user to inject into a generic copyright page
-# get_hldb_isbn = input("HLDB number: i.e. 9781705100219 ")
-# HLDB_ISBN = isbn_hyphenate.hyphenate(get_hldb_isbn)
-
-# copyright_1 = """
-# <head>
-# 	<title>CoverImage</title>
-# 	<link href="../temp.css" type="text/css" rel="stylesheet" />
-# </head>
-
-# <body>
-# 	<p class="figure cover"><img src="./images/fcover.jpg" alt="fcover.jpg" /></p>
-# 	<p class="figure img"><img src="./images/copyright.jpg" alt="copyright.jpg" /></p>
-#     <p class="copyright HL Digital">HL Digital: {HLDB_ISBN}</p>
-# """
-
-# copyright_2 = """
-# 	<p class="figure img"><img class="hallogo" src="./image/hallogo.png" alt="hallogo.png" /></p>
-# 	<p class="copyright">For all works contained herein:</p>
-# 	<p class="copyright">Unauthorized copying, arranging, adapting, recording, Internet posting, public performance,</p>
-# 	<p class="copyright">or other distribution of music in this publication is an infringement of copyright.</p>
-# 	<p class="copyright">Infringers are liable under the law.</p>
-# 	<p class="copyright">Visit Hal Leonard Online at</p>
-# 	<p class="website"><a href="http://www.halleonard.com" target="_blank">www.halleonard.com</a></p>
-
-# 	<p class="copyright">Contact us:</p>
-# 	<p class="copyright"><span class="bold">Hal Leonard</span></p>
-# 	<p class="copyright">7777 W. Bluemound Rd.</p>
-# 	<p class="copyright">Milwaukee, WI 53213</p>
-# 	<p class="copyright"><a href="mailto:info@halleonard.com" target="_blank">Email: info@halleonard.com</a></p>
-
-#     <p class="copyright">In Europe, contact:</p>
-# 	<p class="copyright"><span class="bold">Hal Leonard Europe Limited</span></p>
-# 	<p class="copyright">42 Wigmore Street</p>
-# 	<p class="copyright">Marylebone, London, W1U 2RN</p>
-# 	<p class="copyright"><a href="mailto:info@halleonardeurope.com" target="_blank">Email: info@halleonardeurope.com</a></p>
-
-#     <p class="copyright">In Australia, contact:</p>
-# 	<p class="copyright"><span class="bold">Hal Leonard Australia Pty. Ltd.</span></p>
-# 	<p class="copyright">4 Lentara Court</p>
-# 	<p class="copyright">Cheltenham, Victoria, 3192 Australia</p>
-# 	<p class="copyright"><a href="mailto:ausadmin@halleonard.com.au" target="_blank">Email: ausadmin@halleonard.com.au</a></p>
-# """
-# preBodyFiles = copyright_1 + copyright_2
-
 # saveFile = open('workshop/index.html', 'w')
-# saveFile.write(preBodyFiles + text_to_search)
-# saveFile.close()
 
 
+#* Get HLDB from user to inject into a generic copyright page
+get_hldb_isbn = input("HLDB number: i.e. 9781705100219 ")
+HLDB_ISBN = isbn_hyphenate.hyphenate(get_hldb_isbn)
 
-# TODO: Inject HLDB/cover & copyright into the HTML file
+#* Merge templates to index
+templates = ['templates/body01.xhtml', 'templates/body02.xhtml', 'workshop/index.html']
 
-# <head>
-# 	<title>CoverImage</title>
-# 	<link href="../temp.css" type="text/css" rel="stylesheet" />
-# </head>
-# <body>
-# 	<p class="figure cover"><img src="./image/fcover.jpg" alt="fcover.jpg" /></p>
-# 	<p class="figure img"><img src="./image/copyright.jpg" alt="copyright.jpg" /></p>
-
-# TODO - move cover to top of the file
-# TODO - move copyright to top of the file
+with open('./workshop/output.xhtml', 'w') as outfile:
+    for template in templates:
+        with open(template) as infile:
+            outfile.write(infile.read())
+            outfile.write("\n")
