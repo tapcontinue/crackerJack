@@ -149,8 +149,8 @@ saveFile.write(text_to_search)
 saveFile.close()
 
 #* Get HLDB from user to inject into a generic copyright page
-# get_hldb_isbn = input("HLDB number: i.e. 9781705100219 ")
-# HLDB_ISBN = isbn_hyphenate.hyphenate(get_hldb_isbn)
+get_hldb_isbn = input("HLDB number: i.e. 9781705100219 ")
+HLDB_ISBN = isbn_hyphenate.hyphenate(get_hldb_isbn)
 
 #* Merge templates to index
 templates = ['templates/body01.xhtml', 'templates/body02.xhtml', 'workshop/index.html']
@@ -161,7 +161,17 @@ with open('./workshop/output.xhtml', 'w') as outfile:
             outfile.write(infile.read())
             outfile.write("\n")
 
+#* Clear out temp files move into final resting place
 os.remove("./workshop/index.html")
 os.remove(final_folder_title+"/index.html")
 os.rename("./workshop/output.xhtml", "./workshop/index.html")
 shutil.move("./workshop/index.html", final_folder_title+"/index.html")
+
+#* Inject HLDB ISBN into final html file
+final_resting_spot = (final_folder_title + "/index.html")
+
+with fileinput.FileInput(final_resting_spot, inplace=True,) as file:
+    for line in file:
+        print(line.replace("{HLDB_ISBN}", HLDB_ISBN), end='')
+
+#TODO programatically sort subheading2(coopyrights) into the bottom.
