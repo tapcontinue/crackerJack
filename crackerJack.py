@@ -30,15 +30,15 @@ dest = shutil.move(image_extraction_source, image_extraction_dest)
 os.remove("./extracted_ePub_contents/EPUB/toc.xhtml")
 os.remove("./extracted_ePub_contents/EPUB/tocinternal.xhtml")
 
-#* Extract the photorights from the copyright.xhtml
-copyright_file = ("./extracted_ePub_contents/EPUB/copyright.xhtml")
+# #! Extract the photorights from the copyright.xhtml
+# copyright_file = ("./extracted_ePub_contents/EPUB/copyright.xhtml")
 
-with open(copyright_file, 'r') as search_list, \
-        open(copyright_file, 'r', encoding="utf8") as source_file:
+# with open(copyright_file, 'r') as search_list, \
+#         open(copyright_file, 'r', encoding="utf8") as source_file:
 
-    for line in source_file:
-        if "photorights" in line:
-            photo_rights = (line[26:-5]) # Assuming the tag hasen't changed.
+#     for line in source_file:
+#         if "photorights" in line:
+#             photo_rights = (line[26:-5]) # Assuming the tag hasen't changed.
 
 #* Merge/move all the XHTML into a single HTML - NOT SORTED!
 body_files = sorted(glob.glob("./extracted_ePub_contents/EPUB/body*.xhtml"))
@@ -114,7 +114,6 @@ replacement = [
      "<p class=\"copyright\"><a href=\"http://www.halleonard.com\" target=\"_blank\">www.halleonard.com</a></p>"),
     ("img src=\"image/", "img src=\"./image/"),
     ("src=\"images\"", "src=\"./image"),
-    ("png\"/>", "png\"/></p>"),
     ("\"photorights\"", "\"copyright\""),
     ("<div class=\"group.\">", " "),
     ("<br />", " "),
@@ -148,6 +147,8 @@ replacement = [
     ("<div class=\"backcover\">"," "),
    	("<img src=\"./image/bcover.jpg\" alt=\"bcover.jpg\" />", "<p class=\"figure backcover\"><img src=\"./image/bcover.jpg\" alt=\"bcover.jpg\" /></p>"),
     ("<p class=\"chapter-heading\">", "\n<p class=\"chapter-heading\">"),
+    ("<div class=\"music\d\d\">","<p class=\"figure-tall img-holder\">"),
+    ("png\"/>", "png\"/></p>"),
     ("</body>", " "),
     ("</html>", " ")
 ]
@@ -192,9 +193,9 @@ with fileinput.FileInput(final_resting_spot, inplace=True,) as file:
     for line in file:
         print(line.replace("{HLDB_ISBN}", HLDB_ISBN), end='')
 
-#* INJECT photorights into final html file
-final_resting_spot_CR = (final_folder_title + "/index.html")
+# #* INJECT photorights into final html file
+# final_resting_spot_CR = (final_folder_title + "/index.html")
 
-with fileinput.FileInput(final_resting_spot, inplace=True,) as file:
-    for line in file:
-        print(line.replace("{photo_rights}", photo_rights), end='')
+# with fileinput.FileInput(final_resting_spot, inplace=True,) as file:
+#     for line in file:
+#         print(line.replace("{photo_rights}", photo_rights), end='')
