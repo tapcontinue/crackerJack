@@ -14,8 +14,10 @@ book_title = input("What's the title?: ")
 clean_title = book_title.replace(" ", "_").replace("_-_", "_").replace(":", "_")
 final_folder_title = f"{item_Number_Padded}_{clean_title}"
 
-# * Extract ePub_isbn based on file in input dir
+# * Extract ePub_isbn based on file in input remove .DS_Store pulled from server
 path = "./input"
+if ".DS_Store" in path:
+    os.remove(path + ".DS_Store")
 dir_list = os.listdir(path)
 ePub_isbn = (dir_list[0][0:13])
 
@@ -34,16 +36,16 @@ os.remove("./extracted_ePub_contents/EPUB/toc.xhtml")
 os.remove("./extracted_ePub_contents/EPUB/tocinternal.xhtml")
 
 # #! Extract the photo rights from the copyright.xhtml
-answer = input("Photo rights on title page?: ")
-if answer == "yes":
-    copyright_file = ("./extracted_ePub_contents/EPUB/copyright.xhtml")
-
-    with open(copyright_file, 'r') as search_list, \
-            open(copyright_file, 'r', encoding="utf8") as source_file:
-
-        for line in source_file:
-            if "photorights" in line:
-                photo_rights = (line[26:-5])  # Assuming the tag hasen't changed.
+# answer = input("Photo rights on title page?: ")
+# if answer == "yes":
+#     copyright_file = ("./extracted_ePub_contents/EPUB/copyright.xhtml")
+#
+#     with open(copyright_file, 'r') as search_list, \
+#             open(copyright_file, 'r', encoding="utf8") as source_file:
+#
+#         for line in source_file:
+#             if "photorights" in line:
+#                 photo_rights = (line[26:-5])  # Assuming the tag hasen't changed.
 
 # elif answer == "no":
 #     # Do that.
@@ -218,6 +220,6 @@ for f in files:
 shutil.rmtree(extra_music_dir_path)
 
 # ! EXPERIMENTAL - INJECT photo rights into final html file
-with fileinput.FileInput(final_resting_spot, inplace=True, ) as file:
-    for line in file:
-        print(line.replace("{photo_rights}", photo_rights), end='')
+# with fileinput.FileInput(final_resting_spot, inplace=True, ) as file:
+#     for line in file:
+#         print(line.replace("{photo_rights}", photo_rights), end='')
