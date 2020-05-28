@@ -6,7 +6,7 @@ import re
 import isbn_hyphenate
 import fileinput
 
-#* Get item/title from user
+# * Get item/title from user
 item_Number = input("What's the print item number: ")
 item_Number_Padded = item_Number.zfill(8)
 
@@ -14,15 +14,18 @@ book_title = input("What's the title?: ")
 clean_title = book_title.replace(" ", "_").replace("_-_", "_").replace(":", "_")
 final_folder_title = f"{item_Number_Padded}_{clean_title}"
 
-ePub_isbn = input("ePub ISBN?: ")
+# ePub_isbn = input("ePub ISBN?: ")
+path = "./input"
+dir_list = os.listdir(path)
+ePub_isbn = (dir_list[0][0:13])
+
 os.mkdir(f"{final_folder_title}")
 
-#* Crack open the ePub - mv content
+# * Crack open the ePub - mv content
 with zipfile.ZipFile(f"input/{ePub_isbn}.epub", 'r') as zip_ref:
-# with zipfile.ZipFile(glob.glob(f"input/*.epub", 'r')) as zip_ref:
     zip_ref.extractall("./extracted_ePub_contents")
 
-#* Extract images from ePub
+# * Extract images from ePub
 image_extraction_source = "./extracted_ePub_contents/EPUB/image"
 image_extraction_dest = f"./{final_folder_title}"
 dest = shutil.move(image_extraction_source, image_extraction_dest)
@@ -30,17 +33,25 @@ dest = shutil.move(image_extraction_source, image_extraction_dest)
 os.remove("./extracted_ePub_contents/EPUB/toc.xhtml")
 os.remove("./extracted_ePub_contents/EPUB/tocinternal.xhtml")
 
-# #! Extract the photorights from the copyright.xhtml
-# copyright_file = ("./extracted_ePub_contents/EPUB/copyright.xhtml")
+# #! Extract the photo rights from the copyright.xhtml
+# answer = input("Photo rights on title page?: ")
+# if answer == "yes":
+#     copyright_file = ("./extracted_ePub_contents/EPUB/copyright.xhtml")
+#
+#     with open(copyright_file, 'r') as search_list, \
+#             open(copyright_file, 'r', encoding="utf8") as source_file:
+#
+#         for line in source_file:
+#             if "photorights" in line:
+#                 photo_rights = (line[26:-5]) # Assuming the tag hasen't changed.
 
-# with open(copyright_file, 'r') as search_list, \
-#         open(copyright_file, 'r', encoding="utf8") as source_file:
+# elif answer == "no":
+#     # Do that.
+# else:
+#     print("Please enter yes or no.")
 
-#     for line in source_file:
-#         if "photorights" in line:
-#             photo_rights = (line[26:-5]) # Assuming the tag hasen't changed.
 
-#* Merge/move all the XHTML into a single HTML - NOT SORTED!
+# * Merge/move all the XHTML into a single HTML - NOT SORTED!
 body_files = sorted(glob.glob("./extracted_ePub_contents/EPUB/body*.xhtml"))
 merged_body_files_path = f"{final_folder_title}/index.html"
 
@@ -52,22 +63,23 @@ shutil.rmtree('extracted_ePub_contents')
 
 cracked_ePub = open(f"{final_folder_title}/index.html", 'r').read()
 
-#* Replace old HL tags with G3 tags
+# * Replace old HL tags with G3 tags
 text_to_search = cracked_ePub
 
 replacement = [
     ("<\?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"\?>", " "),
     ("<!DOCTYPE html>", " "),
     ("<html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:epub=\"http://www.idpf.org/2007/ops\"", " "),
-	("xmlns:ibooks=\"http://vocabulary.itunes.apple.com/rdf/ibooks/vocabulary-extensions-1.0\"", " "),
-	("epub:prefix=\"ibooks: http://vocabulary.itunes.apple.com/rdf/ibooks/vocabulary-extensions-1.0\" xml:lang=\"en\"", " "),
-	("lang=\"en\">", " "),
+    ("xmlns:ibooks=\"http://vocabulary.itunes.apple.com/rdf/ibooks/vocabulary-extensions-1.0\"", " "),
+    ("epub:prefix=\"ibooks: http://vocabulary.itunes.apple.com/rdf/ibooks/vocabulary-extensions-1.0\" xml:lang=\"en\"",
+     " "),
+    ("lang=\"en\">", " "),
     ("<head>", " "),
-   	("<link href=\"css/main.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen, projection\" />", " "),
-	("<!-- Extra Meta Tag - Viewport Element -->", " "),
-	("<meta name=\"viewport\" content=\"width=device-width,minimum-scale=1.0,maximum-scale=1.0\" />", " "),
+    ("<link href=\"css/main.css\" rel=\"stylesheet\" type=\"text/css\" media=\"screen, projection\" />", " "),
+    ("<!-- Extra Meta Tag - Viewport Element -->", " "),
+    ("<meta name=\"viewport\" content=\"width=device-width,minimum-scale=1.0,maximum-scale=1.0\" />", " "),
     ("</head>", " "),
-    ("<title>body\d\d</title>"," "),
+    ("<title>body\d\d</title>", " "),
     ("\'>", "\">"),
     ("class=\'", "class=\""),
     ("=\'", "\"="),
@@ -140,38 +152,40 @@ replacement = [
      "	    <p class=\"figure-tall img-holder\""),
     ("</p> ", "</p>"),
     ("<div class=\"break\">", " "),
-    ("<p class=\"chapter-heading\" > id\"=toc_marker-\d\d\">","<p class=\"chapter-heading\">"),
+    ("<p class=\"chapter-heading\" > id\"=toc_marker-\d\d\">", "<p class=\"chapter-heading\">"),
     ("</body> </html>", " "),
     ("<body id=\"body\d\d\" xml:lang=\"en-US\">", " "),
-    ("music.png\" />","music.png\"/></p>"),
-    ("<div class=\"backcover\">"," "),
-   	("<img src=\"./image/bcover.jpg\" alt=\"bcover.jpg\" />", "<p class=\"figure backcover\"><img src=\"./image/bcover.jpg\" alt=\"bcover.jpg\" /></p>"),
+    ("music.png\" />", "music.png\"/></p>"),
+    ("<div class=\"backcover\">", " "),
+    ("<img src=\"./image/bcover.jpg\" alt=\"bcover.jpg\" />",
+     "<p class=\"figure backcover\"><img src=\"./image/bcover.jpg\" alt=\"bcover.jpg\" /></p>"),
     ("<p class=\"chapter-heading\">", "\n<p class=\"chapter-heading\">"),
-    ("<div class=\"music\d\d\">","<p class=\"figure-tall img-holder\">"),
+    ("<div class=\"music\d\d\">", "<p class=\"figure-tall img-holder\">"),
     ("png\"/>", "png\"/></p>"),
+    ("png\" />", "png\"/>"),
     ("</body>", " "),
-    ("</html>", " ")
+    ("</html>", " "),
 ]
 
 for pat, repl in replacement:
     text_to_search = re.sub(pat, repl, text_to_search)
 
-#!EXPERIMENTAL- Mv contents in "Music" subfolder upa level with other images
+# ! EXPERIMENTAL- Move contents in "Music" subfolder upa level with other images
 # src_musics = (f"{final_folder_title}/image/music")
 # src_new_music_location = (f'{final_folder_title}/image')
 # shutil.copy(src_musics, src_new_music_location)
 
 
-#* SAVE
+# * SAVE
 saveFile = open('workshop/index.html', 'w')
 saveFile.write(text_to_search)
 saveFile.close()
 
-#* Get HLDB from user to inject into a generic copyright page
+# * Get HLDB from user to inject into a generic copyright page
 get_hldb_isbn = input("HLDB number: i.e. 9781705100219 ")
 HLDB_ISBN = isbn_hyphenate.hyphenate(get_hldb_isbn)
 
-#* Merge templates to index
+# * Merge templates to index
 templates = ['templates/body01.xhtml', 'templates/body02.xhtml', 'workshop/index.html', 'templates/body03.xhtml']
 
 with open('./workshop/output.xhtml', 'w') as outfile:
@@ -180,22 +194,22 @@ with open('./workshop/output.xhtml', 'w') as outfile:
             outfile.write(infile.read())
             outfile.write("\n")
 
-#* Clear out temp files move into final resting place
+# * Clear out temp files move into final resting place
 os.remove("./workshop/index.html")
-os.remove(final_folder_title+"/index.html")
+os.remove(final_folder_title + "/index.html")
 os.rename("./workshop/output.xhtml", "./workshop/index.html")
-shutil.move("./workshop/index.html", final_folder_title+"/index.html")
+shutil.move("./workshop/index.html", final_folder_title + "/index.html")
 
-#* INJECT HLDB ISBN into final html file
+# * INJECT HLDB ISBN into final html file
 final_resting_spot = (final_folder_title + "/index.html")
 
-with fileinput.FileInput(final_resting_spot, inplace=True,) as file:
+with fileinput.FileInput(final_resting_spot, inplace=True, ) as file:
     for line in file:
         print(line.replace("{HLDB_ISBN}", HLDB_ISBN), end='')
 
-# #* INJECT photorights into final html file
+# ! EXPERIMENTAL - INJECT photo rights into final html file
 # final_resting_spot_CR = (final_folder_title + "/index.html")
-
-# with fileinput.FileInput(final_resting_spot, inplace=True,) as file:
+#
+# with fileinput.FileInput(final_resting_spot, inplace=True, ) as file:
 #     for line in file:
 #         print(line.replace("{photo_rights}", photo_rights), end='')
