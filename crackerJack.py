@@ -164,11 +164,12 @@ replacement = [
     ("png\"/>", "png\"/></p>"),
     ("png\" />", "png\"/>"),
     (".png\"/>", ".png\"/></p>"),
-    ("alt=\"image/music/","alt=./\"image/"),
+    ("alt=\"image/music/","alt=\"./image/"),
     ("</body>", " "),
     ("</html>", " "),
     ("	{1,5}<p class","<p class"),
-    ("		  <p class","<p class")
+    ("		  <p class","<p class"),
+    ("(<p class=\"subheading2\">.*$[\r\n]<p class=\"subheading2\">{1,99}.*$)\n(<p class=\"figure-tall img-holder\">.*$){1,99}","$2\n$1")
 ]
 
 for pat, repl in replacement:
@@ -205,11 +206,6 @@ with fileinput.FileInput(final_resting_spot, inplace=True, ) as file:
     for line in file:
         print(line.replace("{HLDB_ISBN}", HLDB_ISBN), end='')
 
-# ! EXPERIMENTAL - INJECT photo rights into final html file
-with fileinput.FileInput(final_resting_spot, inplace=True, ) as file:
-    for line in file:
-        print(line.replace("{photo_rights}", photo_rights), end='')
-
 # * Remove music dir and move files up a level
 extra_music_dir_path = (final_folder_title + "/image/music/")
 new_music_path = (final_folder_title + "/image")
@@ -220,3 +216,8 @@ for f in files:
 
 # * Remove the now empty music dir
 shutil.rmtree(extra_music_dir_path)
+
+# ! EXPERIMENTAL - INJECT photo rights into final html file
+with fileinput.FileInput(final_resting_spot, inplace=True, ) as file:
+    for line in file:
+        print(line.replace("{photo_rights}", photo_rights), end='')
