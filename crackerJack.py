@@ -174,12 +174,6 @@ replacement = [
 for pat, repl in replacement:
     text_to_search = re.sub(pat, repl, text_to_search)
 
-# ! EXPERIMENTAL- Move contents in "Music" sub folder upa level with other images
-# src_musics = (f"{final_folder_title}/image/music")
-# src_new_music_location = (f'{final_folder_title}/image')
-# shutil.copy(src_musics, src_new_music_location)
-
-
 # * SAVE
 saveFile = open('workshop/index.html', 'w')
 saveFile.write(text_to_search)
@@ -216,4 +210,13 @@ with fileinput.FileInput(final_resting_spot, inplace=True, ) as file:
     for line in file:
         print(line.replace("{photo_rights}", photo_rights), end='')
 
-# ! EXPERIMENTAL - remove music dir and move files up a level
+# * Remove music dir and move files up a level
+extra_music_dir_path = (final_folder_title + "/image/music/")
+new_music_path = (final_folder_title + "/image")
+
+files = os.listdir(extra_music_dir_path)
+for f in files:
+    shutil.move(extra_music_dir_path+f, new_music_path)
+
+# * Remove the now empty music dir
+shutil.rmtree(extra_music_dir_path)
