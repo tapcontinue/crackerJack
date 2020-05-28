@@ -34,16 +34,16 @@ os.remove("./extracted_ePub_contents/EPUB/toc.xhtml")
 os.remove("./extracted_ePub_contents/EPUB/tocinternal.xhtml")
 
 # #! Extract the photo rights from the copyright.xhtml
-# answer = input("Photo rights on title page?: ")
-# if answer == "yes":
-#     copyright_file = ("./extracted_ePub_contents/EPUB/copyright.xhtml")
-#
-#     with open(copyright_file, 'r') as search_list, \
-#             open(copyright_file, 'r', encoding="utf8") as source_file:
-#
-#         for line in source_file:
-#             if "photorights" in line:
-#                 photo_rights = (line[26:-5]) # Assuming the tag hasen't changed.
+answer = input("Photo rights on title page?: ")
+if answer == "yes":
+    copyright_file = ("./extracted_ePub_contents/EPUB/copyright.xhtml")
+
+    with open(copyright_file, 'r') as search_list, \
+            open(copyright_file, 'r', encoding="utf8") as source_file:
+
+        for line in source_file:
+            if "photorights" in line:
+                photo_rights = (line[26:-5])  # Assuming the tag hasen't changed.
 
 # elif answer == "no":
 #     # Do that.
@@ -163,14 +163,18 @@ replacement = [
     ("<div class=\"music\d\d\">", "<p class=\"figure-tall img-holder\">"),
     ("png\"/>", "png\"/></p>"),
     ("png\" />", "png\"/>"),
+    (".png\"/>", ".png\"/></p>"),
+    ("alt=\"image/music/","alt=\"image/"),
     ("</body>", " "),
     ("</html>", " "),
+    ("	{1,5}<p class","<p class"),
+    ("		  <p class","<p class")
 ]
 
 for pat, repl in replacement:
     text_to_search = re.sub(pat, repl, text_to_search)
 
-# ! EXPERIMENTAL- Move contents in "Music" subfolder upa level with other images
+# ! EXPERIMENTAL- Move contents in "Music" sub folder upa level with other images
 # src_musics = (f"{final_folder_title}/image/music")
 # src_new_music_location = (f'{final_folder_title}/image')
 # shutil.copy(src_musics, src_new_music_location)
@@ -208,8 +212,8 @@ with fileinput.FileInput(final_resting_spot, inplace=True, ) as file:
         print(line.replace("{HLDB_ISBN}", HLDB_ISBN), end='')
 
 # ! EXPERIMENTAL - INJECT photo rights into final html file
-# final_resting_spot_CR = (final_folder_title + "/index.html")
-#
-# with fileinput.FileInput(final_resting_spot, inplace=True, ) as file:
-#     for line in file:
-#         print(line.replace("{photo_rights}", photo_rights), end='')
+with fileinput.FileInput(final_resting_spot, inplace=True, ) as file:
+    for line in file:
+        print(line.replace("{photo_rights}", photo_rights), end='')
+
+# ! EXPERIMENTAL - remove music dir and move files up a level
