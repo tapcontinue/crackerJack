@@ -164,7 +164,7 @@ replacement = [
     ("png\"/>", "png\"/></p>"),
     ("png\" />", "png\"/>"),
     (".png\"/>", ".png\"/></p>"),
-    ("alt=\"image/music/","alt=\"image/"),
+    ("alt=\"image/music/","alt=./\"image/"),
     ("</body>", " "),
     ("</html>", " "),
     ("	{1,5}<p class","<p class"),
