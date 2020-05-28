@@ -14,7 +14,7 @@ book_title = input("What's the title?: ")
 clean_title = book_title.replace(" ", "_").replace("_-_", "_").replace(":", "_")
 final_folder_title = f"{item_Number_Padded}_{clean_title}"
 
-# ePub_isbn = input("ePub ISBN?: ")
+# * Extract ePub_isbn based on file in input dir
 path = "./input"
 dir_list = os.listdir(path)
 ePub_isbn = (dir_list[0][0:13])
