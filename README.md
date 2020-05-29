@@ -24,6 +24,11 @@ Once the script is done everything is be in a new folder based on your input for
 - Reorders structure
 - Injects pre-body files (copyright page / css / fcover)
 - Injects formatted HL digital number
+- Extracts ePub names rather than ask for user input
+- Finds extra music folder and moves content up a level
+
+Full list:
+https://github.com/tapcontinue/crackerJack/commits/master
 
 **UPCOMING FEATURES:**
 
@@ -33,11 +38,7 @@ G3 requires image to be kept together. This is easily done in regEx but I want t
 **CURRENT BUGS:**
 
 Issue: Image sub-folder called "music" causes we'll have linking issues on the final HTML
-Solution #1: Manually move the contents up a level.
-Solution #2: Find instances of this structure programmatically and move contents out of folder
-Progress: Investigating.
-
-
+Progress: Nearly solved, folder moves but need circumvent error when no dir exists.
 
 **RESOLVED BUGS**
 

@@ -6,10 +6,11 @@ import re
 import isbn_hyphenate
 import fileinput
 
-# * Get item/title from user
+# * Get item# from user
 item_Number = input("What's the print item number: ")
 item_Number_Padded = item_Number.zfill(8)
 
+# * Get title from user
 book_title = input("What's the title?: ")
 clean_title = book_title.replace(" ", "_").replace("_-_", "_").replace(":", "_").replace("__", "_")
 final_folder_title = f"{item_Number_Padded}_{clean_title}"
@@ -36,7 +37,7 @@ dest = shutil.move(image_extraction_source, image_extraction_dest)
 os.remove("./extracted_ePub_contents/EPUB/toc.xhtml")
 os.remove("./extracted_ePub_contents/EPUB/tocinternal.xhtml")
 
-# #! Extract the photo rights from the copyright.xhtml
+# ! - Still experimental: Extract the photo rights from the copyright.xhtml
 answer = input("Photo rights on title page? Yes/No: ")
 if answer == "no":
     photo_rights = "none"
