@@ -11,7 +11,7 @@ item_Number = input("What's the print item number: ")
 item_Number_Padded = item_Number.zfill(8)
 
 book_title = input("What's the title?: ")
-clean_title = book_title.replace(" ", "_").replace("_-_", "_").replace(":", "_")
+clean_title = book_title.replace(" ", "_").replace("_-_", "_").replace(":", "_").replace("__", "_")
 final_folder_title = f"{item_Number_Padded}_{clean_title}"
 
 # * Extract ePub_isbn based on file in input remove .DS_Store pulled from server
@@ -37,7 +37,7 @@ os.remove("./extracted_ePub_contents/EPUB/toc.xhtml")
 os.remove("./extracted_ePub_contents/EPUB/tocinternal.xhtml")
 
 # #! Extract the photo rights from the copyright.xhtml
-answer = input("Photo rights on title page?: ")
+answer = input("Photo rights on title page? Yes/No: ")
 if answer == "no":
     photo_rights = "none"
     print('Skipping photo rights')
@@ -169,6 +169,7 @@ replacement = [
     ("</html>", " "),
     ("	{1,5}<p class","<p class"),
     ("		  <p class","<p class"),
+    ("  xml:lang=\"en\"", " ")
 ]
 
 for pat, repl in replacement:
