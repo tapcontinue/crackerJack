@@ -21,7 +21,7 @@ if ".DS_Store" in path:
     os.remove(path + ".DS_Store")
 
 dir_list = os.listdir(path)
-ePub_isbn = (dir_list[1][0:13])
+ePub_isbn = (dir_list[0][0:13])
 
 os.mkdir(f"{final_folder_title}")
 
