@@ -211,6 +211,8 @@ with fileinput.FileInput(final_resting_spot, inplace=True, ) as file:
 extra_music_dir_path = (final_folder_title + "/image/music/")
 new_music_path = (final_folder_title + "/image")
 
+
+# ! need to rewrite as a open to avoid error when no excess music dir
 files = os.listdir(extra_music_dir_path)
 for f in files:
     shutil.move(extra_music_dir_path+f, new_music_path)
