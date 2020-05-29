@@ -18,8 +18,9 @@ final_folder_title = f"{item_Number_Padded}_{clean_title}"
 path = "./input"
 if ".DS_Store" in path:
     os.remove(path + ".DS_Store")
+
 dir_list = os.listdir(path)
-ePub_isbn = (dir_list[0][0:13])
+ePub_isbn = (dir_list[1][0:13])
 
 os.mkdir(f"{final_folder_title}")
 
@@ -36,22 +37,19 @@ os.remove("./extracted_ePub_contents/EPUB/toc.xhtml")
 os.remove("./extracted_ePub_contents/EPUB/tocinternal.xhtml")
 
 # #! Extract the photo rights from the copyright.xhtml
-# answer = input("Photo rights on title page?: ")
-# if answer == "yes":
-#     copyright_file = ("./extracted_ePub_contents/EPUB/copyright.xhtml")
-#
-#     with open(copyright_file, 'r') as search_list, \
-#             open(copyright_file, 'r', encoding="utf8") as source_file:
-#
-#         for line in source_file:
-#             if "photorights" in line:
-#                 photo_rights = (line[26:-5])  # Assuming the tag hasen't changed.
+answer = input("Photo rights on title page?: ")
+if answer == "no":
+    photo_rights = "none"
+    print('Skipping photo rights')
+if answer == "yes":
+    copyright_file = ("./extracted_ePub_contents/EPUB/copyright.xhtml")
 
-# elif answer == "no":
-#     # Do that.
-# else:
-#     print("Please enter yes or no.")
+    with open(copyright_file, 'r') as search_list, \
+            open(copyright_file, 'r', encoding="utf8") as source_file:
 
+        for line in source_file:
+            if "photorights" in line:
+                photo_rights = (line[26:-5])  # Assuming the tag hasn't changed.
 
 # * Merge/move all the XHTML into a single HTML - NOT SORTED!
 body_files = sorted(glob.glob("./extracted_ePub_contents/EPUB/body*.xhtml"))
@@ -171,7 +169,6 @@ replacement = [
     ("</html>", " "),
     ("	{1,5}<p class","<p class"),
     ("		  <p class","<p class"),
-    ("(<p class=\"subheading2\">.*$[\r\n]<p class=\"subheading2\">{1,99}.*$)\n(<p class=\"figure-tall img-holder\">.*$){1,99}","$2\n$1")
 ]
 
 for pat, repl in replacement:
@@ -219,7 +216,7 @@ for f in files:
 # * Remove the now empty music dir
 shutil.rmtree(extra_music_dir_path)
 
-# ! EXPERIMENTAL - INJECT photo rights into final html file
-# with fileinput.FileInput(final_resting_spot, inplace=True, ) as file:
-#     for line in file:
-#         print(line.replace("{photo_rights}", photo_rights), end='')
+# * EXPERIMENTAL - INJECT photo rights into final html file
+with fileinput.FileInput(final_resting_spot, inplace=True, ) as file:
+    for line in file:
+        print(line.replace("{photo_rights}", photo_rights), end='')
