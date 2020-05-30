@@ -21,7 +21,9 @@ if ".DS_Store" in path:
     os.remove(path + ".DS_Store")
 
 dir_list = os.listdir(path)
-ePub_isbn = (dir_list[0][0:13])
+ePub_isbn = str([i for i in dir_list if i.startswith('978')])
+ePub_isbn = ePub_isbn[2:15]
+print(ePub_isbn)
 
 os.mkdir(f"{final_folder_title}")
 
@@ -224,3 +226,5 @@ shutil.rmtree(extra_music_dir_path)
 with fileinput.FileInput(final_resting_spot, inplace=True, ) as file:
     for line in file:
         print(line.replace("{photo_rights}", photo_rights), end='')
+
+print("done.")
