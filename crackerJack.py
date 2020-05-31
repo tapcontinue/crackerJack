@@ -213,18 +213,19 @@ with fileinput.FileInput(final_resting_spot, inplace=True, ) as file:
 extra_music_dir_path = (final_folder_title + "/image/music/")
 new_music_path = (final_folder_title + "/image")
 
-
-# ! need to rewrite as a open to avoid error when no excess music dir
-files = os.listdir(extra_music_dir_path)
-for f in files:
-    shutil.move(extra_music_dir_path+f, new_music_path)
+if os.path.exists(extra_music_dir_path):
+    files = os.listdir(extra_music_dir_path)
+    for f in files:
+        shutil.move(extra_music_dir_path+f, new_music_path)
+    else:
+        pass
 
 # * Remove the now empty music dir
-shutil.rmtree(extra_music_dir_path)
+if os.path.exists(extra_music_dir_path):
+    shutil.rmtree(extra_music_dir_path)
 
 # * EXPERIMENTAL - INJECT photo rights into final html file
 with fileinput.FileInput(final_resting_spot, inplace=True, ) as file:
     for line in file:
         print(line.replace("{photo_rights}", photo_rights), end='')
 
-print("done.")
