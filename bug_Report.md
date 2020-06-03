@@ -1,9 +1,11 @@
 **CURRENT BUGS:**
 
-Issue: Image sub-folder called "music" causes we'll have linking issues on the final HTML
-Progress: Nearly solved, folder moves but need circumvent error when no dir exists.
 
 **RESOLVED BUGS**
+
+Issue: Image sub-dir called "music" causes we'll have linking issues on the final HTML.
+Progress: Issue seems resolved. Although this does not take into account any extra dirs not named music.
+There are some out there with a 'FM' dir with production stills but they are rare
 
 Issue: Script breaks randomly when picking up the ePub ePub ISBN from file name.
 Solution: 1st attempt to pick up this content lead to an issue with .DS_Store files being brought in from the server.

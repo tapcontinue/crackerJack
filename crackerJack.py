@@ -23,7 +23,7 @@ if ".DS_Store" in path:
 dir_list = os.listdir(path)
 ePub_isbn = str([i for i in dir_list if i.startswith('978')])
 ePub_isbn = ePub_isbn[2:15]
-print(ePub_isbn)
+# print(ePub_isbn)
 
 os.mkdir(f"{final_folder_title}")
 
@@ -136,8 +136,8 @@ replacement = [
     ("<section class=\"break\"> ", " "),
     ("<div class=\"copyrightart\">", " "),
     ("\"png\"/>", "\"png\"/></p>"),
-    ("<div class=\"music{079,099}\">", "<p class=\"figure-tall img-holder\">"),
-    ("<div class=\"music{79,99}\">", "<p class=\"figure-tall img-holder\">"),
+    ("<div class=\"music{001,099}\">", "<p class=\"figure-tall img-holder\">"),
+    ("<div class=\"music{01,99}\">", "<p class=\"figure-tall img-holder\">"),
     ("<div class=\"music\">", "<p class=\"figure-tall img-holder\">"),
     ("   ", " "),
     ("<img src=\"./image/copyright.jpg\" alt=\"copyright.jpg\"/>",
@@ -172,6 +172,8 @@ replacement = [
     ("</html>", " "),
     ("	{1,5}<p class","<p class"),
     ("		  <p class","<p class"),
+    ("</p></p></p>", "</p>"),
+    ("</p></p>", "</p>"),
     ("  xml:lang=\"en\"", " ")
 ]
 
