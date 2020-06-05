@@ -23,7 +23,6 @@ if ".DS_Store" in path:
 dir_list = os.listdir(path)
 ePub_isbn = str([i for i in dir_list if i.startswith('978')])
 ePub_isbn = ePub_isbn[2:15]
-# print(ePub_isbn)
 
 os.mkdir(f"{final_folder_title}")
 
