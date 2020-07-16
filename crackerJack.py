@@ -105,7 +105,7 @@ while True:
         ("<h1 class=\"songtitle\"", "<p class=\"chapter-heading\" >"),
         ("<div style=\"text-align:center;\">", " "),
         ("</h1>", "</p>"),
-        ("\"credit\"", "\"subheading2\""),
+        ("\"credit\"", "\"subheading1\""),
         ("\"</h4>", "</p>"),
         ("<section class=\"song-start\">", " "),
         ("<div class=\"credit-container\">", " "),
@@ -236,7 +236,7 @@ while True:
     if os.path.exists(extra_music_dir_path):
         shutil.rmtree(extra_music_dir_path)
 
-    # * EXPERIMENTAL - INJECT photo rights into final html file
+    # ! EXPERIMENTAL - INJECT photo rights into final html file
     with fileinput.FileInput(final_resting_spot, inplace=True, ) as file:
         for line in file:
             print(line.replace("{photo_rights}", photo_rights), end='')
