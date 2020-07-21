@@ -171,6 +171,7 @@ while True:
         (".png\"/>", ".png\"/></p>"),
         ("alt=\"image/music/", "alt=\"./image/"),
         ("</body>", " "),
+        ("[\r,\n]\s{1,10}</p>","</p>"),
         ("</html>", " "),
         ("	{1,5}<p class", "<p class"),
         ("		  <p class", "<p class"),
@@ -185,6 +186,8 @@ while True:
         ("<p class=\"figure-tall img-holder\">$\n", ""),
         ("\n\n<p ", "<p "),
         ("", ""),
+        ("\n\n{2,99}", "\n\n"),
+        ("(	   \n   \n  )", ""),
     ]
 
     for pat, repl in replacement:
