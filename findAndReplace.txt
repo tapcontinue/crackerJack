@@ -1,7 +1,13 @@
+NEW STANDARD:
+(<p class="subheading2">.*[\r\n])(<p class="figure-tall img-holder">.*$[\r\n])
+$2$1
+
+-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+OLD STANDARD:
+FIND: (<p class="subheading2">.*$[\r\n]<p class="subheading2">{1,99}.*$)\n(<p class="figure-tall img-holder">.*$){1,99}
+REPLACE: $2\n$1
+-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+DON'T USE ANYMORE:
 (<p class="figure-tall img-holder">.*$)\n(<p class="subheading2.*$)
 $2\n$1
 
-
-OLD
-FIND: (<p class="subheading2">.*$[\r\n]<p class="subheading2">{1,99}.*$)\n(<p class="figure-tall img-holder">.*$){1,99}
-REPLACE: $2\n$1
