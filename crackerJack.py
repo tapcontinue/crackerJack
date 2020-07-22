@@ -188,6 +188,11 @@ while True:
         ("", ""),
         ("\n\n{2,99}", "\n\n"),
         ("(	   \n   \n  )", ""),
+        ("  <p class=\"subheading1","<p class=\"subheading1"),
+        ("	    <p class=\"figure", "<p class=\"figure"),
+        ("	  <p class=\"figure", "<p class=\"figure"),
+        ("  <p class=\"subhead", "<p class=\"subhead"),
+        ("<p class=\"figure backcover\"", "\n\n<p class=\"figure backcover\""),
     ]
 
     for pat, repl in replacement:
