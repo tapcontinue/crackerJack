@@ -23,14 +23,15 @@ Once the script is done everything is be in a new folder based on your input for
 - Replaces XHTML headers
 - Reorders structure
 - Injects pre-body files (copyright page / css / fcover)
+- Re-sorts images based on the G3 requirement automatically (NEW!)
 - Injects formatted HL digital number
 - Extracts ePub names rather than ask for user input
 - Finds extra music folder and moves content up a level
+
 
 Full list:
 https://github.com/tapcontinue/crackerJack/commits/master
 
 **UPCOMING FEATURES:**
 
-- Re-sort images
-G3 requires image to be kept together. This is easily done in regEx but I want to do it with Python.
+- Copyright extraction is based on single line, need to support multiple lines.
