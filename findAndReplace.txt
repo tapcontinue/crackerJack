@@ -1,9 +1,13 @@
-NEW STANDARD:
-(<p class="subheading2">.*[\r\n])(<p class="figure-tall img-holder">.*$[\r\n])
+EXPERIMENTAL!!! Clump music btm
+(<p class="figure-tall img-holder">.*$[\r\n])(^<p class="subheading2.*$[\r\n])
 $2$1
 
 -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
-OLD STANDARD:
+OLD STANDARD: clump music middle
+(<p class="subheading2">.*[\r\n])(<p class="figure-tall img-holder">.*$[\r\n])
+$2$1
+-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+OLDER STANDARD:
 FIND: (<p class="subheading2">.*$[\r\n]<p class="subheading2">{1,99}.*$)\n(<p class="figure-tall img-holder">.*$){1,99}
 REPLACE: $2\n$1
 -_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_

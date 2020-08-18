@@ -13,7 +13,11 @@ while True:
 
     # * Get title from user
     book_title = input("What's the title?: ")
-    clean_title = book_title.replace(" ", "_").replace("_-_", "_").replace(":", "_").replace("__", "_")
+    clean_title = book_title\
+        .replace(" ", "_")\
+        .replace("_-_", "_")\
+        .replace(":", "_")\
+        .replace("__", "_")
     final_folder_title = f"{item_Number_Padded}_{clean_title}"
 
     # * Extract ePub_isbn based on file in input remove .DS_Store pulled from server
@@ -171,7 +175,7 @@ while True:
         (".png\"/>", ".png\"/></p>"),
         ("alt=\"image/music/", "alt=\"./image/"),
         ("</body>", " "),
-        ("[\r,\n]\s{1,10}</p>","</p>"),
+        ("[\r,\n]\s{1,10}</p>", "</p>"),
         ("</html>", " "),
         ("	{1,5}<p class", "<p class"),
         ("		  <p class", "<p class"),
@@ -179,7 +183,7 @@ while True:
         ("</p></p></p>", "</p>"),
         ("</p></p>", "</p>"),
         ("<div class=\"musicfirst\">", "<p class=\"figure-tall img-holder\">"),
-        ("<div class=\"legend\">","<p class=\"figure-tall img-holder\">"),
+        ("<div class=\"legend\">", "<p class=\"figure-tall img-holder\">"),
         ("<h1 class=\"legend\"  ", "<p class=\"subheading1\">"),
         ("<p class=\"legend2\">", "<p class=\"subheading1\">"),
         ("  xml:lang=\"en\"", " "),
@@ -191,29 +195,14 @@ while True:
         ("", ""),
         ("\n\n{2,99}", "\n\n"),
         ("(	   \n   \n  )", ""),
-        ("  <p class=\"subheading1","<p class=\"subheading1"),
+        ("  <p class=\"subheading1", "<p class=\"subheading1"),
         ("	    <p class=\"figure", "<p class=\"figure"),
         ("	  <p class=\"figure", "<p class=\"figure"),
         ("  <p class=\"subhead", "<p class=\"subhead"),
+        ("<p class=\"subheading2\"></p>", ""),
         ("<p class=\"figure backcover\"", "\n\n<p class=\"figure backcover\""),
-        ("(<p class=\"subheading2\">.*[\r\n])(<p class=\"figure-tall img-holder\">.*[\r\n])", r"\2\1"),
-        ("(<p class=\"subheading2\">.*[\r\n])(<p class=\"figure-tall img-holder\">.*[\r\n])", r"\2\1"),
-        ("(<p class=\"subheading2\">.*[\r\n])(<p class=\"figure-tall img-holder\">.*[\r\n])", r"\2\1"),
-        ("(<p class=\"subheading2\">.*[\r\n])(<p class=\"figure-tall img-holder\">.*[\r\n])", r"\2\1"),
-        ("(<p class=\"subheading2\">.*[\r\n])(<p class=\"figure-tall img-holder\">.*[\r\n])", r"\2\1"),
-        ("(<p class=\"subheading2\">.*[\r\n])(<p class=\"figure-tall img-holder\">.*[\r\n])", r"\2\1"),
-        ("(<p class=\"subheading2\">.*[\r\n])(<p class=\"figure-tall img-holder\">.*[\r\n])", r"\2\1"),
-        ("(<p class=\"subheading2\">.*[\r\n])(<p class=\"figure-tall img-holder\">.*[\r\n])", r"\2\1"),
-        ("(<p class=\"subheading2\">.*[\r\n])(<p class=\"figure-tall img-holder\">.*[\r\n])", r"\2\1"),
-        ("(<p class=\"subheading2\">.*[\r\n])(<p class=\"figure-tall img-holder\">.*[\r\n])", r"\2\1"),
-        ("(<p class=\"subheading2\">.*[\r\n])(<p class=\"figure-tall img-holder\">.*[\r\n])", r"\2\1"),
-        ("(<p class=\"subheading2\">.*[\r\n])(<p class=\"figure-tall img-holder\">.*[\r\n])", r"\2\1"),
-        ("(<p class=\"subheading2\">.*[\r\n])(<p class=\"figure-tall img-holder\">.*[\r\n])", r"\2\1"),
-        ("(<p class=\"subheading2\">.*[\r\n])(<p class=\"figure-tall img-holder\">.*[\r\n])", r"\2\1"),
-        ("(<p class=\"subheading2\">.*[\r\n])(<p class=\"figure-tall img-holder\">.*[\r\n])", r"\2\1"),
-        ("(<p class=\"subheading2\">.*[\r\n])(<p class=\"figure-tall img-holder\">.*[\r\n])", r"\2\1"),
-        ("(<p class=\"subheading2\">.*[\r\n])(<p class=\"figure-tall img-holder\">.*[\r\n])", r"\2\1"),
-        ("(<p class=\"subheading2\">.*[\r\n])(<p class=\"figure-tall img-holder\">.*[\r\n])", r"\2\1"),
+        # ("(<p class=\"subheading2\">.*[\r\n])(<p class=\"figure-tall img-holder\">.*[\r\n])", r"\2\1"),# ! OG MIDS
+        # ("<p class=\"figure-tall img-holder\">.*$[\r\n])(^<p class=\"subheading2.*$[\r\n]", r"\2\1") #! TEST
     ]
 
     for pat, repl in replacement:
